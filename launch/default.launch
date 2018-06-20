@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="rospy_crazyflie" name="crazyflie_server" type="server_node.py" output="screen">
+    <rosparam file='$(find rospy_crazyflie)/config/config.yaml' command='load'/>
+  </node>
+</launch>

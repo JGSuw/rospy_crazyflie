@@ -40,11 +40,10 @@ class CrazyflieServer:
             Disconnect,
             self._disconnect_srv_cb
         )
-
-        for uri in self._uris:
+        for name in self._uris.keys():
+            uri = self._uris[name]
             parts = uri.split('/')
             channel = parts[3]
-            name = 'cf%s' % channel
             cf = Crazyflie()
             cf.connected.add_callback(self._connected)
             cf.disconnected.add_callback(self._disconnected)

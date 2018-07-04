@@ -1,21 +1,13 @@
 import rospy
 import time
-from rospy_crazyflie.crazyflie_client import CrazyflieClient
-from rospy_crazyflie.srv import *
+import rospy_crazyflie.crazyflie_client as crazyflie_client
 
 if __name__ == "__main__":
     rospy.init_node('rospy_crazyflie_example')
 
-    get_crazyflies = rospy.ServiceProxy(
-        'crazyflie_server/get_crazyflies',
-        GetCrazyflies
-    )
-    get_crazyflies.wait_for_service()
-    response = get_crazyflies()
-    for crazyflie_name in response.crazyflies:
-        print(crazyflie_name)
-
-    client = CrazyflieClient('cf85')
+    crazyflies = crazyflie_client.get_crazyflies(server='/crazyflie_server')
+    print(crazyflies)
+    client = crazyflie_client.CrazyflieClient(crazyflies[0])
 
     client.take_off(height=.5)
     client.forward(2)

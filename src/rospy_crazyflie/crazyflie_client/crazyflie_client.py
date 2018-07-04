@@ -8,6 +8,15 @@ from rospy_crazyflie.msg import *
 from rospy_crazyflie.srv import *
 from rospy_crazyflie.motion_commands import *
 
+def get_crazyflies(server='/crazyflie_server'):
+        proxy = rospy.ServiceProxy(
+            'crazyflie_server/get_crazyflies',
+            GetCrazyflies
+        )
+        proxy.wait_for_service()
+        response = proxy()
+        return response.crazyflies
+
 def log_decode(log_data):
     """ decodes log data from json string and returns python dict / list of the data
     """

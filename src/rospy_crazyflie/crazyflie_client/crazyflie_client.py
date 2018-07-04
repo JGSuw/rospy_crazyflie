@@ -2,6 +2,7 @@ import rospy
 import actionlib
 import json
 import pickle
+import time
 
 from rospy_crazyflie.msg import *
 from rospy_crazyflie.srv import *
@@ -62,15 +63,13 @@ class CrazyflieClient:
     """
 
     def __delete__(self):
-        self._land_client.send_goal(LandGoal(.25))
-        self._land_client.wait_for_result()
-        for action_client in self._action_clients:
-            action_client.cancel_all_goals()
-            del action_client
-        self._disconnect_client.call(self._name)
-        for service_proxy in self._service_proxies:
-            service_proxy.close()
-            del service_proxy
+        self.land()
+        while self.action_in_progress():
+            time.sleep(.1)
+        self._position_control_client.cancel_all_goals()
+        # for service_proxy in self._service_proxies:
+        #     service_proxy.close()
+        #     del service_proxy
         for log_name in self._log_subs.keys():
             subscriber = self._log_subs.pop(log_name)
             subscriber.unregister()
@@ -173,7 +172,7 @@ class CrazyflieClient:
         self._add_mc_goal(goal)
 
     def forward(self, distance_m, velocity=VELOCITY):
-        """
+        """self._position_control
         Go forward
 
         :param distance_m: the distance to travel (meters)
@@ -301,6 +300,7 @@ class CrazyflieClient:
         :return:
         """
         action = StartLeft(velocity=velocity)
+        print(pickle.dumps(action))
         self._velocity_control_client(pickle.dumps(action))
 
     def start_right(self, velocity=VELOCITY):
@@ -359,6 +359,9 @@ class CrazyflieClient:
 
         :return:
         """
+        self._current_mc_goal = None
+        self._mc_goals = []
+        self._position_control_client.cancel_all_goals()
         action = Stop()
         self._velocity_control_client(pickle.dumps(action))
 
@@ -481,5 +484,16 @@ class CrazyflieClient:
         if self._log_callbacks[log_name] is not None:
             self._log_callbacks[log_name](data, timestamp)
 
-    def actions_in_waiting(self):
+    def _actions_in_waiting(self):
         return len(self._mc_goals)
+
+    def action_in_progress(self):
+        if self._current_mc_goal is not None:
+            return True
+        elif self._actions_in_waiting() > 0:
+            return True
+        return None
+
+    def wait(self):
+        while self.action_in_progress():
+            time.sleep(.1)

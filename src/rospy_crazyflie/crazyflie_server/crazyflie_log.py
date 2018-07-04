@@ -49,7 +49,6 @@ class CrazyflieLog:
                 queue_size = 10
             )
             self._addLogConfig_as.set_succeeded()
-            print("yippee")
         except BaseException as e:
             print("failed to add log %s" % (str(e)))
             self._addLogConfig_as.set_aborted()

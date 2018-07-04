@@ -118,11 +118,11 @@ class CrazyflieControl:
             elif isinstance(obj, Stop):
                 self._mc.stop()
             else:
-                raise TypeError('Object is not a valid velocity command')
+                return 'Object is not a valid velocity command'
         except Exception as e:
             print(str(e))
-            return False
-        return True
+            raise e
+        return 'ok'
 
 
     """

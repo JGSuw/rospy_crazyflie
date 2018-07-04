@@ -1,6 +1,0 @@
-# The goal, takeoff to a certain height
-float32 height
----
-# Result
-bool flying
----

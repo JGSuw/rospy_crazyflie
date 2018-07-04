@@ -1,0 +1,5 @@
+# Position Commands are defined in rospy_crazyflie.motion_commands
+# They are pickled by the rospy_crazyflie.client and unpickled by the server
+string pickle
+---
+---

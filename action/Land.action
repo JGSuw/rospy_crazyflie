@@ -1,6 +1,0 @@
-# The goal, land with a certain velocity
-float32 velocity
----
-# The result
-bool landed
----

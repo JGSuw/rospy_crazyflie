@@ -62,20 +62,18 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate services in the 'srv' folder
  add_service_files(
    FILES
+   ResetPositionEstimator.srv
    SetParam.srv
    SendHoverSetpoint.srv
    GetCrazyflies.srv
-   Disconnect.srv
+   VelocityControl.srv
  )
 
 ## Generate actions in the 'action' folder
  add_action_files(
    FILES
-   Connect.action
-   TakeOff.action
-   Land.action
-   MoveDistance.action
    AddLogConfig.action
+   PositionControl.action
  )
 
 ## Generate added messages and services with any dependencies listed here

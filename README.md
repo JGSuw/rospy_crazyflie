@@ -22,13 +22,44 @@ To use this project, you will need
 
 To install ROS and the dependences for building packages, please follow the [official instructions](http://wiki.ros.org/ROS/Installation).
 
-To install crazyflie-lib-python, follow the instructions in the [readme](https://github.com/bitcraze/crazyflie-lib-python#development) under development. Note that you do not have to fork the repository - if you would prefer, just clone it from [https://github.com/bitcraze/crazyflie-lib-python.git]
+## Installing crazyflie-lib-python
+To install this dependency, first upgrade your pip wheel
+
+
+`sudo pip install --upgrade pip
+`
+
+Now clone crazyflie-lib-python and install it
+
+`
+git clone https://github.com/bitcrazey/crazyflie-lib-python
+sudo python -m pip install crazyflie-lib-python
+`
+
+## Add permissions for the Crazyradio
+To use the Crazyradio without being root some permissions need to be added for the user. Create the plugdev group and add your user to it
+
+
+`sudo groupadd plugdev
+sudo usermod -a -G plugdev <username>`
+
+Create a file named
+
+
+`/etc/udev/rules.d/99-crazyradio.rules`
+
+
+And add the following line to it
+
+
+`SUBSYSTEM=="usb", ATTRS{idVendor}=="1915", ATTRS{idProduct}=="7777", MODE="0664", GROUP="plugdev"`
 
 # Installation
-To install this project, open a terminal and create a catkin workspace
+To install this project, open a terminal to create a catkin workspace
 
 
-`mkdir catkin_ws/src; cd catkin_ws/src; catkin_init_workspace`
+`mkdir catkin_ws; mkdir catkin_ws/src
+cd src`
 
 
 Then clone this repository
@@ -40,11 +71,8 @@ Then clone this repository
 Now change directory back to `catkin_ws` and build the package, then install
 
 
-`cd ..`
-
-
-`catkin_make rospy_crazyflie; catkin_make install rospy_crazyflie`
-
+`cd ..
+catkin_make`
 
 Lastly, source the devel directory
 

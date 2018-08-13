@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 """
 Copyright (c) 2018, Joseph Sullivan
 All rights reserved.
@@ -27,7 +26,33 @@ The views and conclusions contained in the software and documentation are those
 of the authors and should not be interpreted as representing official policies,
 either expressed or implied, of the <project name> project.
 """
-from rospy_crazyflie.crazyflie_server import CrazyflieServer
+
+"""
+This is a demontration of how to make a crazyflie takeoff and land.
+"""
+import rospy
+import time
+import rospy_crazyflie.crazyflie_client as crazyflie_client
+import sys
+
 if __name__ == "__main__":
-    node = CrazyflieServer()
-    node.run()
+    rospy.init_node('rospy_crazyflie_example')
+
+    # Connect to the crazyflie
+    crazyflies = crazyflie_client.get_crazyflies(server='/crazyflie_server')
+    client = crazyflie_client.CrazyflieClient(crazyflies[0])
+
+    # Causes the crazyflie to takeoff to height of .5 meters
+    client.take_off(.5)
+
+    raw_input("enter anything to exit")
+
+    # Causes the crazyflie to land
+    client.land()
+
+    # Waits until current command is complete
+    client.wait()
+
+    # Exit program
+    del client
+    sys.exit(0)

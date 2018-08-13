@@ -1,3 +1,32 @@
+"""
+Copyright (c) 2018, Joseph Sullivan
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The views and conclusions contained in the software and documentation are those
+of the authors and should not be interpreted as representing official policies,
+either expressed or implied, of the <project name> project.
+"""
+
 import numpy as np
 import pickle
 import time
@@ -60,14 +89,12 @@ class CrazyflieControl:
         """
         Action servers for this crazyflie controller
         """
-        print('foo')
         self._position_control_as = actionlib.SimpleActionServer(
             self._name + '/position_control',
             PositionControlAction,
             self._position_control_cb,
             False
         )
-        print('bar')
         self._position_control_as.start()
     """
     Service Callbacks
@@ -91,8 +118,9 @@ class CrazyflieControl:
     def _velocity_control_cb(self, req):
         try:
             obj = pickle.loads(req.pickle)
+            print(self._mc)
             if isinstance(obj, SetVelSetpoint):
-                self._mc.set_vel_setpoint(obj.vx, obj.vy, obj.vz, obj.rate_yaw)
+                self._mc._set_vel_setpoint(obj.vx, obj.vy, obj.vz, obj.rate_yaw)
             elif isinstance(obj, StartBack):
                 self._mc.start_back(velocity = obj.velocity)
             elif isinstance(obj, StartCircleLeft):

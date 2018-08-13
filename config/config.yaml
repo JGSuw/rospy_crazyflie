@@ -1,1 +1,28 @@
-  uris : {cRaZyFlI : 'radio://0/85/2M/E7E7E7E742'}
+# Specifies which crazyflies to connect to, and what to name them in ROS
+uris :
+  crazyflie : 'radio://0/81/2M/E7E7E7E781'
+
+# Enable logs for publishing
+pub_controller_rpy_rate:
+  enable: False
+  period_in_ms: 10
+
+pub_controller_rpyt:
+  enable: False
+  period_in_ms: 10
+
+pub_kalman_position:
+  enable: True
+  period_in_ms: 100
+
+pub_motor_power:
+  enable: False
+  period_in_ms: 10
+
+pub_pos_ctl:
+  enable: False
+  period_in_ms: 100
+
+pub_stabilizer:
+  enable: True
+  period_in_ms: 10

@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 """
 Copyright (c) 2018, Joseph Sullivan
 All rights reserved.
@@ -27,7 +26,45 @@ The views and conclusions contained in the software and documentation are those
 of the authors and should not be interpreted as representing official policies,
 either expressed or implied, of the <project name> project.
 """
-from rospy_crazyflie.crazyflie_server import CrazyflieServer
+
+"""
+This example demonstrates how to use the CrazyflieClient to perform feed-forward
+position control. In order for this to work, a FlowDeck is required, otherwise,
+the vehicle will surely drift and crash.
+
+The control is called feed-forward because there is no position feedback in the system.
+Hence the vehicle navigates by "dead reckoning" based on the assumption that the velocity
+controller is ideal. Errors will build over time.
+"""
+
+import rospy
+import time
+import rospy_crazyflie.crazyflie_client as crazyflie_client
+from rospy_crazyflie.crazyflie_client import CrazyflieClient
+import sys
+
 if __name__ == "__main__":
-    node = CrazyflieServer()
-    node.run()
+    rospy.init_node("position_control_example")
+
+    # Get all crazyflies on the /crazyflie_server
+    crazyflies = crazyflie_client.get_crazyflies(server='/crazyflie_server')
+    # Connect to first crazyflie
+    client = CrazyflieClient(crazyflies[0])
+
+    # Commands are queued and executed in sequence. They are non-blocking
+    client.take_off(.5) # Takeoff to .5 meters
+    client.forward(.5)  # go .5 meters forward
+    client.back(.5)     # go .5 meters backward
+    client.left(.5)     # go .5 meters left
+    client.right(.5)    # go .5 meters right
+
+    # Many more position and velocity commands are implemented in CrazyflieClient!
+
+    # Wait for all the commands to complete
+    client.wait()
+
+    client.land()
+    client.wait()
+
+    del client
+    sys.exit(0)

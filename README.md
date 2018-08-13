@@ -5,11 +5,6 @@ Users are free to interact with the Crazyflies either through ROS topics and act
 This allows users familiar with ROS to quickly integrate their crazyflies with part of a larger robotic system,
 while also providing an appropriate starting point for beginners.
 
-This project uses a client server architecture. In this model, the user's
-program (a ROS node) interacts with a client API that handles communication with the back-end server.
-The server (a separate ROS node) maintains a radio connection to each Crazyflie in the environment, and implements
-the control and data logging functions using crazyflie-lib-python.
-
 # Dependencies
 To use this project, you will need
 - Ubuntu (tested on 16.04)  

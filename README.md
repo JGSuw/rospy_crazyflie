@@ -1,5 +1,5 @@
 # Overview
-This project is for controlling one or more Bitcraze Crazyflies in ROS using python.
+This project can be used to control one or more Bitcraze Crazyflies in ROS using python.
 Writing navigation programs with this software is simple and flexible.
 Users are free to interact with the Crazyflies either through ROS topics and actions, or through a wrapper of the official Bitcraze python API.
 This allows users familiar with ROS to quickly integrate their crazyflies with part of a larger robotic system,

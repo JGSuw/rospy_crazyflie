@@ -1,7 +1,5 @@
 # Overview
 This project is for controlling one or more Bitcraze Crazyflies in ROS using python.
-With this software, you can write your own autonomous navigation programs by
-retrieving the vehicle telemetry (such as sensor data) and transmitting movement commands.
 Writing navigation programs with this software is simple and flexible.
 Users are free to interact with the Crazyflies either through ROS topics and actions, or through a wrapper of the official Bitcraze python API.
 This allows users familiar with ROS to quickly integrate their crazyflies with part of a larger robotic system,
@@ -20,7 +18,11 @@ To use this project, you will need
 - ROS dependencies for building packages
 - Bitcraze crazyflie-lib-python
 
+
 To install ROS and the dependences for building packages, please follow the [official instructions](http://wiki.ros.org/ROS/Installation).
+
+
+It is also highly reccommended that you install the Bitcraze [Crazyflie Client GUI](https://github.com/bitcraze/crazyflie-clients-pthon). This GUI provides a means to debug Crazyflies, modify their link URI, and more.
 
 ## Installing crazyflie-lib-python
 To install this dependency, first upgrade your pip wheel
@@ -31,7 +33,7 @@ To install this dependency, first upgrade your pip wheel
 Now clone crazyflie-lib-python and install it
 
 ```
-git clone https://github.com/bitcrazey/crazyflie-lib-python
+git clone https://github.com/bitcraze/crazyflie-lib-python
 sudo python -m pip install crazyflie-lib-python
 ```
 
@@ -84,7 +86,56 @@ Lastly, source the devel directory
 
 `source devel/setup.bash`
 
+
+In order to avoid having to source this file whenever you open a new terminal, you should append that line to your `~/.bashrc` file
+
 # Getting Started
+
+## Connecting to a Crazyflie
+Each crazyflie interface is identified by a unique resource identifier (URI). Here is an example URI
+
+`//radio/0/80/2M/E7E7E7E7E7`
+
+The parts of the URI are `//<interface>/0/<channel>/<baudrate>/<address>`.
+
+The server node connects to crazyflies by URI. Hence, to connect to a crazyflie, you have to tell the server what its URI is.
+The Crazyflie URI can be modified using the official [Crazyflie Client GUI](https://github.com/bitcraze/crazyflie-clients-pthon).
+### Parts of a URI
+The parts of the URI are `//<interface>/0/<channel>/<baudrate>/<address>`.
+
+The valid baudrates are 
+-250K
+-1M
+-2M
+
+The address is a 5-byte long number in hexidecimal. By default, crazyflies ship with the address `E7E7E7E7E7`
+
+### Finding the Crazyflie URI
+
+You can use the `scripts/scan.py` script to list all Crazyflie URIs "seen" by the radio, at a specified address. For example:
+
+
+```
+roscd rospy_crazyflie
+python scripts/scan.py E7E7E7E7E7
+```
+
+The script will print all URIs at that address. Use this tool to find a Crazyflies URI so you can tell the server to connect to it.
+The Crazyflie URI can be modified using the [Crazyflie Client GUI](https://github.com/bitcraze/crazyflie-clients-pthon). It is necessary to give Crazyflies a different URI when multiple are flying simultaneously.
+
+### Provide the URI to the server
+
+The server will automatically connect to URIs listed in the configuration file `config/config.yaml`. In this file is a list of key-value pairs, associating a name with each URI.
+
+
+For example,
+
+
+```
+uris:
+  crazyflie1: //radio/0/80/2M/E7E7E7E7E7
+```
+
 ## Starting a server
 Before you can run a client program, you first need to start the server. If the project is built properly, you can launch the server like so
 

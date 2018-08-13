@@ -43,7 +43,7 @@ Now change directory back to `catkin_ws` and build the package, then install
 `cd ..`
 
 
-`catkin_make rospy_crazyflie; catkin_install rospy_crazyflie`
+`catkin_make rospy_crazyflie; catkin_make install rospy_crazyflie`
 
 
 Lastly, source the devel and install directories into your environment

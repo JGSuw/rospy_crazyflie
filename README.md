@@ -46,9 +46,9 @@ Now change directory back to `catkin_ws` and build the package, then install
 `catkin_make rospy_crazyflie; catkin_make install rospy_crazyflie`
 
 
-Lastly, source the devel and install directories into your environment
+Lastly, source the devel directory
 
-`source devel/setup.bash; source install/setup.bash`
+`source devel/setup.bash`
 
 # Getting Started
 ## Starting a server

@@ -104,15 +104,15 @@ The Crazyflie URI can be modified using the official [Crazyflie Client GUI](http
 The parts of the URI are `//<interface>/0/<channel>/<baudrate>/<address>`.
 
 The valid baudrates are 
--250K
--1M
--2M
+- 250K
+- 1M
+- 2M
 
 The address is a 5-byte long number in hexidecimal. By default, crazyflies ship with the address `E7E7E7E7E7`
 
 ### Finding the Crazyflie URI
 
-You can use the `scripts/scan.py` script to list all Crazyflie URIs "seen" by the radio, at a specified address. For example:
+You can use the `scripts/scan.py` script to list all crazyflie URIs "seen" by the radio at a specified address. For example:
 
 
 ```
@@ -120,7 +120,7 @@ roscd rospy_crazyflie
 python scripts/scan.py E7E7E7E7E7
 ```
 
-The script will print all URIs at that address. Use this tool to find a Crazyflies URI so you can tell the server to connect to it.
+The script will print all URIs at the address `E7E7E7E7E7`. Use this tool to find a crazyflie's URI so you can tell the server to connect to it.
 The Crazyflie URI can be modified using the [Crazyflie Client GUI](https://github.com/bitcraze/crazyflie-clients-pthon). It is necessary to give Crazyflies a different URI when multiple are flying simultaneously.
 
 ### Provide the URI to the server
@@ -145,7 +145,7 @@ Before you can run a client program, you first need to start the server. If the 
 
 The default launch file starts a server node with the name crazyflie_server. Refer to this server name in your client program.
 ## Run an example
-Now that the server is running, you can try executing the takeoff and landing example script like so
+Now that the server is running, you can try executing the takeoff and landing example script in a new terminal. Remember to make sure that `devel/setup.bash` has been sourced.
 
 
 `roscd rospy_crazyflie/examples`

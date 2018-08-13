@@ -30,11 +30,10 @@ To install this dependency, first upgrade your pip wheel
 
 Now clone crazyflie-lib-python and install it
 
-`
+```
 git clone https://github.com/bitcrazey/crazyflie-lib-python
-
 sudo python -m pip install crazyflie-lib-python
-`
+```
 
 ## Add permissions for the Crazyradio
 To use the Crazyradio without being root some permissions need to be added for the user. Create the plugdev group and add your user to it

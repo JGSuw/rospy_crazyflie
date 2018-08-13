@@ -39,7 +39,8 @@ sudo python -m pip install crazyflie-lib-python
 To use the Crazyradio without being root some permissions need to be added for the user. Create the plugdev group and add your user to it
 
 
-```sudo groupadd plugdev
+```
+sudo groupadd plugdev
 sudo usermod -a -G plugdev <username>
 ```
 

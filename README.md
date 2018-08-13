@@ -5,7 +5,7 @@ retrieving the vehicle telemetry (such as sensor data) and transmitting movement
 Writing navigation programs with this software is simple and flexible.
 Users are free to interact with the Crazyflies either through ROS topics and actions, or through a wrapper of the official Bitcraze python API.
 This allows users familiar with ROS to quickly integrate their crazyflies with part of a larger robotic system,
-while also providing an appropriate starting point beginners.
+while also providing an appropriate starting point for beginners.
 
 This project uses a client server architecture. In this model, the user's
 program (a ROS node) interacts with a client API that handles communication with the back-end server.

@@ -1,9 +1,5 @@
 # Overview
-This project can be used to control one or more Bitcraze Crazyflies in ROS using python.
-Writing navigation programs with this software is simple and flexible.
-Users are free to interact with the Crazyflies either through ROS topics and actions, or through a wrapper of the official Bitcraze python API.
-This allows users familiar with ROS to quickly integrate their crazyflies with part of a larger robotic system,
-while also providing an appropriate starting point for beginners.
+This project can be used to control one or more Bitcraze Crazyflies in ROS using python. Writing navigation programs with this software is simple and flexible. Users are free to interact with the Crazyflies through ROS topics and actions, or through a wrapper of the official Bitcraze python API. This allows users familiar with ROS to quickly integrate their crazyflies with part of a larger robotic system, while also providing an appropriate starting point for beginners.
 
 # Dependencies
 To use this project, you will need
@@ -33,7 +29,7 @@ sudo python -m pip install crazyflie-lib-python
 ```
 
 ## Add permissions for the Crazyradio
-To use the Crazyradio without being root some permissions need to be added for the user. Create the plugdev group and add your user to it
+In order to use the Crazyradio without being root some permissions need to be added for the user. Create the plugdev group and add your user to it.
 
 
 ```
@@ -47,7 +43,7 @@ Create a file named
 `/etc/udev/rules.d/99-crazyradio.rules`
 
 
-And add the following line to it
+and add the following line to it;
 
 
 `SUBSYSTEM=="usb", ATTRS{idVendor}=="1915", ATTRS{idProduct}=="7777", MODE="0664", GROUP="plugdev"`
@@ -63,13 +59,13 @@ cd src
 ```
 
 
-Then clone this repository
+then clone this repository;
 
 
 `git clone https://github.com/jgsuw/rospy-crazyflie.git`
 
 
-Now change directory back to `catkin_ws` and build the package, then install
+Now change directory back to `catkin_ws` and build this package.
 
 
 ```
@@ -82,7 +78,11 @@ Lastly, source the devel directory
 `source devel/setup.bash`
 
 
-In order to avoid having to source this file whenever you open a new terminal, you should append that line to your `~/.bashrc` file
+In order to avoid having to source this file whenever you open a new terminal, you should append the following line to your `~/.bachrc` file;
+
+`source <catkin workspace path>/devel/setup.bash`
+
+Make sure to replace `<catkin workspace path>` with the actual path of your catkin workspace. 
 
 # Getting Started
 
@@ -93,7 +93,7 @@ Each crazyflie interface is identified by a unique resource identifier (URI). He
 
 The parts of the URI are `//<interface>/0/<channel>/<baudrate>/<address>`.
 
-The server node connects to crazyflies by URI. Hence, to connect to a crazyflie, you have to tell the server what its URI is.
+The server node connects to crazyflies by it's URI. Hence, to connect to a crazyflie, you have to tell the server what it's URI is.
 The Crazyflie URI can be modified using the official [Crazyflie Client GUI](https://github.com/bitcraze/crazyflie-clients-pthon).
 ### Parts of a URI
 The parts of the URI are `//<interface>/0/<channel>/<baudrate>/<address>`.
@@ -107,7 +107,7 @@ The address is a 5-byte long number in hexidecimal. By default, crazyflies ship 
 
 ### Finding the Crazyflie URI
 
-You can use the `scripts/scan.py` script to list all crazyflie URIs "seen" by the radio at a specified address. For example:
+You can use `scripts/scan.py` to list all crazyflie URIs "seen" by the radio at a specified address. For example:
 
 
 ```
@@ -115,12 +115,11 @@ roscd rospy_crazyflie
 python scripts/scan.py E7E7E7E7E7
 ```
 
-The script will print all URIs at the address `E7E7E7E7E7`. Use this tool to find a crazyflie's URI so you can tell the server to connect to it.
-The Crazyflie URI can be modified using the [Crazyflie Client GUI](https://github.com/bitcraze/crazyflie-clients-pthon). It is necessary to give Crazyflies a different URI when multiple are flying simultaneously.
+The script will print every URI with the address `E7E7E7E7E7`. Use this tool to find a crazyflie's URI so you can tell the server to connect to it. The Crazyflie URI can be modified using the [Crazyflie Client GUI](https://github.com/bitcraze/crazyflie-clients-pthon). It is necessary to give Crazyflies a different URI when multiple are flying simultaneously.
 
 ### Provide the URI to the server
 
-The server will automatically connect to URIs listed in the configuration file `config/config.yaml`. In this file is a list of key-value pairs, associating a name with each URI.
+The server will automatically connect to URIs listed in the file `config/config.yaml`. In this file is a list of key-value pairs, associating a name with each URI.
 
 
 For example,
@@ -129,10 +128,11 @@ For example,
 ```
 uris:
   crazyflie1: //radio/0/80/2M/E7E7E7E7E7
+  crazyflie2: //radio/0/81/2M/E7E7E7E7E7
 ```
 
 ## Starting a server
-Before you can run a client program, you first need to start the server. If the project is built properly, you can launch the server like so
+Before you can run a client program, you first need to start the server. You can launch the server like so
 
 
 `roslaunch rospy_crazyflie default.launch`

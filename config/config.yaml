@@ -1,6 +1,6 @@
 # Specifies which crazyflies to connect to, and what to name them in ROS
 uris :
-  crazyflie : 'radio://0/81/2M/E7E7E7E781'
+  crazyflie1 : 'radio://0/81/2M/E7E7E7E7E7'
 
 # Enable logs for publishing
 pub_controller_rpy_rate:

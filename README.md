@@ -27,16 +27,24 @@ To install crazyflie-lib-python, follow the instructions in the [readme](https:/
 # Installation
 To install this project, open a terminal and create a catkin workspace
 
+
 `mkdir catkin_ws/src; cd catkin_ws/src; catkin_init_workspace`
+
 
 Then clone this repository
 
+
 `git clone https://github.com/jgsuw/rospy-crazyflie.git`
+
 
 Now change directory back to `catkin_ws` and build the package, then install
 
+
 `cd ..`
+
+
 `catkin_make rospy_crazyflie; catkin_install rospy_crazyflie`
+
 
 Lastly, source the devel and install directories into your environment
 
@@ -45,11 +53,21 @@ Lastly, source the devel and install directories into your environment
 # Getting Started
 ## Starting a server
 Before you can run a client program, you first need to start the server. If the project is built properly, you can launch the server like so
+
+
 `roslaunch rospy_crazyflie default.launch`
+
+
 The default launch file starts a server node with the name crazyflie_server. Refer to this server name in your client program.
 ## Run an example
 Now that the server is running, you can try executing the takeoff and landing example script like so
+
+
 `roscd rospy_crazyflie/examples`
+
+
 `python takeoff_landing.py`
+
+
 This example will tell the crazyflie to takeoff to a height of .5 meters, and will hover until the user hits enter in the console.
 Please note that without a [FlowDeck](https://www.bitcraze.io/flow-deck/) the crazyflie will drift over time, or without a [Z-ranger deck](https://www.bitcraze.io/z-ranger-deck/) the crazyflie will not be able to hold altitude.

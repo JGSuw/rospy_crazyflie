@@ -25,7 +25,8 @@ Now clone crazyflie-lib-python and install it
 
 ```
 git clone https://github.com/bitcraze/crazyflie-lib-python
-sudo python -m pip install crazyflie-lib-python
+cd crazyflie-lib-python
+sudo python -m pip install .
 ```
 
 ## Add permissions for the Crazyradio
@@ -55,14 +56,14 @@ To install this project, open a terminal to create a catkin workspace
 ```
 mkdir catkin_ws
 mkdir catkin_ws/src
-cd src
+cd catkin_ws/src
 ```
 
 
 then clone this repository;
 
 
-`git clone https://github.com/jgsuw/rospy-crazyflie.git`
+`git clone https://github.com/jgsuw/rospy_crazyflie.git`
 
 
 Now change directory back to `catkin_ws` and build this package.
@@ -78,7 +79,7 @@ Lastly, source the devel directory
 `source devel/setup.bash`
 
 
-In order to avoid having to source this file whenever you open a new terminal, you should append the following line to your `~/.bachrc` file;
+In order to avoid having to source this file whenever you open a new terminal, you should append the following line to your `~/.bashrc` file;
 
 `source <catkin workspace path>/devel/setup.bash`
 

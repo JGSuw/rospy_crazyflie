@@ -18,8 +18,11 @@ It is also highly reccommended that you install the Bitcraze [Crazyflie Client G
 ## Installing crazyflie-lib-python
 To install this dependency, first upgrade your pip wheel
 
+```
+sudo apt install python-pip
+sudo pip install --upgrade pip
+```
 
-`sudo pip install --upgrade pip`
 
 Now clone crazyflie-lib-python and install it
 

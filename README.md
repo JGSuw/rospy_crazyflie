@@ -30,6 +30,7 @@ Now clone crazyflie-lib-python and install it
 git clone https://github.com/bitcraze/crazyflie-lib-python
 cd crazyflie-lib-python
 sudo python -m pip install .
+cd ..
 ```
 
 ## Add permissions for the Crazyradio

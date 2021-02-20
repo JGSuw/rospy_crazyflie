@@ -4,7 +4,7 @@ This project can be used to control one or more Bitcraze Crazyflies in ROS using
 # Dependencies
 To use this project, you will need
 - Ubuntu (tested on 16.04)  
-- Python (tested on 2.7)
+- Python (tested on 2.7) Note: ROS 1 is designed for Python 2, not Python 3
 - a ROS distribution (tested on Kinetic Kame)
 - ROS dependencies for building packages
 - Bitcraze crazyflie-lib-python
@@ -16,7 +16,7 @@ To install ROS and the dependences for building packages, please follow the [off
 It is also highly reccommended that you install the Bitcraze [Crazyflie Client GUI](https://github.com/bitcraze/crazyflie-clients-pthon). This GUI provides a means to debug Crazyflies, modify their link URI, and more.
 
 ## Installing crazyflie-lib-python
-To install this dependency, first upgrade your pip wheel
+To install this dependency, first upgrade your pip wheel for Python 2
 
 ```
 sudo apt install python-pip
@@ -24,7 +24,7 @@ sudo pip install --upgrade pip
 ```
 
 
-Now clone crazyflie-lib-python and install it
+Now clone crazyflie-lib-python and install it in your Python 2 environment
 
 ```
 git clone https://github.com/bitcraze/crazyflie-lib-python

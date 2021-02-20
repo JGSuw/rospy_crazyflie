@@ -1,3 +1,3 @@
-import crazyflie_client
-import crazyflie_server
-import motion_commands
+from . import client
+from . import server
+from . import motion_commands

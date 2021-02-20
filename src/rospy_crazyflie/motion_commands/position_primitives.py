@@ -26,74 +26,101 @@ The views and conclusions contained in the software and documentation are those
 of the authors and should not be interpreted as representing official policies,
 either expressed or implied, of the <project name> project.
 """
-
+from .motion_primitive import MotionPrimitive
 VELOCITY = 0.2
 RATE = 360. / 5.
 ANGLE_DEGREES = 360.
 
-class Back:
-    def __init__(self, distance_m, velocity=VELOCITY):
-        self.distance_m = distance_m
-        self.velocity = velocity
-
-class CircleLeft:
+class CircleLeft(MotionPrimitive):
     def __init__(self, radius_m, velocity=VELOCITY, angle_degrees=ANGLE_DEGREES):
-        self.radius_m = radius_m
-        self.velocity = velocity
-        self.angle_degrees = angle_degrees
+        super().__init__(self)
+        self.dict['command']='CircleLeft'
+        self.dict['radius_m']=radius_m
+        self.dict['velocity']=velocity
+        self.dict['angle_degrees']=angle_degrees
 
-class CircleRight:
+class CircleRight(MotionPrimitive):
     def __init__(self, radius_m, velocity=VELOCITY, angle_degrees=ANGLE_DEGREES):
-        self.radius_m = radius_m
-        self.velocity = velocity
-        self.angle_degrees = angle_degrees
+        super().__init__(self)
+        self.dict['command']='CircleRight'
+        self.dict['radius_m']=radius_m
+        self.dict['velocity']=velocity
+        self.dict['angle_degrees']=angle_degrees
 
-class Down:
+class Back(MotionPrimitive):
     def __init__(self, distance_m, velocity=VELOCITY):
-        self.distance_m = distance_m
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='Back'
+        self.dict['distance_m']=distance_m
+        self.dict['velocity']=velocity
 
-class Forward:
+class Down(MotionPrimitive):
     def __init__(self, distance_m, velocity=VELOCITY):
-        self.distance_m = distance_m
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='Down'
+        self.dict['distance_m']=distance_m
+        self.dict['velocity']=velocity
 
-class Land:
+class Forward(MotionPrimitive):
+    def __init__(self, distance_m, velocity=VELOCITY):
+        super().__init__(self)
+        self.dict['command']='Forward'
+        self.dict['distance_m']=distance_m
+        self.dict['velocity']=velocity
+
+class Land(MotionPrimitive):
     def __init__(self, velocity=VELOCITY):
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='Land'
+        self.dict['velocity']=velocity
 
-class Left:
+class Left(MotionPrimitive):
     def __init__(self, distance_m, velocity=VELOCITY):
-        self.distance_m = distance_m
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='Left'
+        self.dict['distance_m']=distance_m
+        self.dict['velocity']=velocity
 
-class MoveDistance:
+class MoveDistance(MotionPrimitive):
     def __init__(self, distance_x_m, distance_y_m, distance_z_m, velocity=VELOCITY):
-        self.x = distance_x_m
-        self.y = distance_y_m
-        self.z = distance_z_m
-        self.velocity = velocity
-class Right:
-    def __init__(self, distance_m, velocity=VELOCITY):
-        self.distance_m = distance_m
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='MoveDistance'
+        self.dict['distance_x_m']=distance_x_m
+        self.dict['distance_y_m']=distance_y_m
+        self.dict['distance_z_m']=distance_z_m
+        self.dict['velocity']=velocity
 
-class TakeOff:
+class Right(MotionPrimitive):
+    def __init__(self, distance_m, velocity=VELOCITY):
+        super().__init__(self)
+        self.dict['command']='Right'
+        self.dict['distance_m']=distance_m
+        self.dict['velocity']=velocity
+
+class TakeOff(MotionPrimitive):
     def __init__(self, height=None, velocity=VELOCITY):
-        self.height = height
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='TakeOff'
+        self.dict['height']=height
+        self.dict['velocity']=velocity
 
-class TurnLeft:
+class TurnLeft(MotionPrimitive):
     def __init__(self, angle_degrees, rate=RATE):
-        self.angle_degrees = angle_degrees
-        self.rate = rate
+        super().__init__(self)
+        self.dict['command']='TurnLeft'
+        self.dict['angle_degrees']=angle_degrees
+        self.dict['rate']=rate
 
-class TurnRight:
+class TurnRight(MotionPrimitive):
     def __init__(self, angle_degrees, rate=RATE):
-        self.angle_degrees = angle_degrees
-        self.rate = rate
+        super().__init__(self)
+        self.dict['command']='TurnRight'
+        self.dict['angle_degrees']=angle_degrees
+        self.dict['rate']=rate
 
-class Up:
+class Up(MotionPrimitive):
     def __init__(self, distance_m, velocity=VELOCITY):
-        self.distance_m = distance_m
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='Up'
+        self.dict['distance_m']=distance_m
+        self.dict['velocity']=velocity

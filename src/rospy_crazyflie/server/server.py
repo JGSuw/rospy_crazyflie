@@ -33,14 +33,14 @@ import threading
 import rospy
 import actionlib
 
-from crazyflie_log import CrazyflieLog
-from crazyflie_control import CrazyflieControl
+from .log import Log
+from .control import Control
 import cflib.crtp
 
 from cflib.crazyflie import Crazyflie
 from rospy_crazyflie.srv import GetCrazyflies, GetCrazyfliesResponse
 
-class CrazyflieServer:
+class Server:
 
     def __init__(self):
         # Ros stuff
@@ -85,11 +85,11 @@ class CrazyflieServer:
     def _connected(self, link_uri):
         print('Connected to %s.' % (link_uri))
         if link_uri not in self._crazyflie_logs:
-            log = CrazyflieLog(*self._crazyflies[link_uri])
+            log = Log(*self._crazyflies[link_uri])
             self._start_logs(log)
             self._crazyflie_logs[link_uri] = log
         if link_uri not in self._controllers:
-            controller = CrazyflieControl(*self._crazyflies[link_uri])
+            controller = Control(*self._crazyflies[link_uri])
             self._controllers[link_uri] = controller
 
     def _connection_failed(self, link_uri, msg):

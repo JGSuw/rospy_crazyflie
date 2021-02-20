@@ -37,7 +37,7 @@ import actionlib
 from rospy_crazyflie.msg import *
 import json
 
-class CrazyflieLog:
+class Log:
     """
     This object manages the creation of vehicle telemetry logging configurations,
     and publishing log data to ros topics.

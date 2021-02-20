@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 """
 Copyright (c) 2018, Joseph Sullivan
 All rights reserved.
@@ -27,7 +26,12 @@ The views and conclusions contained in the software and documentation are those
 of the authors and should not be interpreted as representing official policies,
 either expressed or implied, of the <project name> project.
 """
-from rospy_crazyflie.crazyflie_server import CrazyflieServer
-if __name__ == "__main__":
-    node = CrazyflieServer()
-    node.run()
+import yaml
+class MotionPrimitive:
+    def __init__(self):
+        self.dict = {}
+    def serialize(self):
+        yaml.dump(self.dict)
+
+def deserialize(string):
+    return yaml.load(string)

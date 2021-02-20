@@ -42,9 +42,41 @@ from geometry_msgs.msg import Vector3
 
 from rospy_crazyflie.msg import *
 from rospy_crazyflie.srv import *
-from rospy_crazyflie.motion_commands import *
+import rospy_crazyflie.motion_commands as motion_commands
 
-class CrazyflieControl:
+vel_request_handlers = {
+    'SetVelSetpoint':       lambda obj: self._mc._set_vel_setpoint(obj['vx'], obj.['vy'], obj['vz'], obj['rate_yaw']),
+    'StartBack':            lambda obj: self._mc.start_back(velocity = obj['velocity']),
+    'StartCircleLeft':      lambda obj: self._mc.start_circle_left(obj['radius_m'], velocity=obj['velocity']),
+    'StartCircleRight':     lambda obj: self._mc.start_turn_right(obj['radius_m'], velocity=obj['velocity']),
+    'StartDown':            lambda obj: self._mc.start_down(velocity=obj['velocity']),
+    'StartForward':         lambda obj: self._mc.start_forward(velocity=obj['velocity']),
+    'StartLeft':            lambda obj: self._mc.start_left(velocity=obj['velocity']),
+    'StartLinearMotion':    lambda obj: self._mc.start_linear_motion(obj['vx'], obj['vy'], obj['vz']),
+    'StartRight':           lambda obj: self._mc.start_right(velocity=obj['velocity']),
+    'StartTurnLeft':        lambda obj: self._mc.start_turn_left(rate=obj['rate']),
+    'StartTurnRight':       lambda obj: self._mc.start_turn_right(rate=obj['rate']),
+    'StartUp':              lambda obj: self._mc.start_up(velocity=obj['velocity']),
+    'Stop':                 lambda obj: self._mc.stop(),
+}
+
+pos_request_handlers = {
+    'Back': lambda obj: self._mc.back(obj['distance_m'], velocity=obj['velocity']),
+    'CircleLeft': lambda obj: self._mc.circle_left(obj['radius_m'], velocity=obj['velocity'], angle_degrees=obj['angle_degrees']),
+    'CircleRight': lambda obj: self._mc.circle_right(obj['radius_m'], velocity=obj['velocity'], angle_degrees=obj['angle_degrees']),
+    'Down': lambda obj: self._mc.down(obj['distance_m', velocity=obj['velocity']),
+    'Forward': lambda obj: self._mc.forward(obj['distance_m'], velocity=obj'[velocity']),
+    'Land': lambda obj: self._mc.land(velocity=obj['velocity']),
+    'Left': lambda obj: self._mc.left(obj['distance_m', velocity=obj['velocity']),
+    'MoveDistance': lambda obj: self._mc.move_distance(obj['x'], obj['y'], obj['z'], velocity=obj['velocity']),
+    'Right': lambda obj: self._mc.right(obj['distance_m'], velocity=obj['velocity']),
+    'TakeOff': lambda obj: self._mc.take_off(height=obj['height'], velocity=obj['velocity']),
+    'TurnLeft': lambda obj: self._mc.turn_left(obj['angle_degrees'], rate=obj['rate']),
+    'TurnRight': lambda obj: self._mc.turn_right(obj['angle_degrees'], rate=obj['rate']),
+    'Up': lambda obj: self._mc.up(obj['distance_m', velocity=obj['velocity'])
+}
+
+class Control:
 
     def __init__(self, name, crazyflie):
         # Instantiate motion commander
@@ -106,6 +138,7 @@ class CrazyflieControl:
         vx = req.vx
         vy = req.vy
         z = req.z
+        z = req.z
         yaw_rate = req.yaw_rate
         self._cf.commander.send_hover_setpoint(vx, vy, yaw_rate, z)
         return []
@@ -117,36 +150,9 @@ class CrazyflieControl:
 
     def _velocity_control_cb(self, req):
         try:
-            obj = pickle.loads(req.pickle)
+            request = motion_commands.deserialize(req)
             print(self._mc)
-            if isinstance(obj, SetVelSetpoint):
-                self._mc._set_vel_setpoint(obj.vx, obj.vy, obj.vz, obj.rate_yaw)
-            elif isinstance(obj, StartBack):
-                self._mc.start_back(velocity = obj.velocity)
-            elif isinstance(obj, StartCircleLeft):
-                self._mc.start_circle_left(obj.radius_m, velocity = obj.velocity)
-            elif isinstance(obj, StartCircleRight):
-                self._mc.start_turn_right(obj.radius_m, velocity = obj.velocity)
-            elif isinstance(obj, StartDown):
-                self._mc.start_down(velocity = obj.velocity)
-            elif isinstance(obj, StartForward):
-                self._mc.start_forward(velocity = obj.velocity)
-            elif isinstance(obj, StartLeft):
-                self._mc.start_left(velocity = obj.velocity)
-            elif isinstance(obj, StartLinearMotion):
-                self._mc.start_linear_motion(obj.vx, obj.vy, obj.vz)
-            elif isinstance(obj, StartRight):
-                self._mc.start_right(velocity = obj.velocity)
-            elif isinstance(obj, StartTurnLeft):
-                self._mc.start_turn_left(rate = obj.rate)
-            elif isinstance(obj, StartTurnRight):
-                self._mc.start_turn_right(rate = obj.rate)
-            elif isinstance(obj, StartUp):
-                self._mc.start_up(velocity = obj.velocity)
-            elif isinstance(obj, Stop):
-                self._mc.stop()
-            else:
-                return 'Object is not a valid velocity command'
+            vel_request_handlers[request['command']](reqeust)
         except Exception as e:
             print(str(e))
             raise e
@@ -159,39 +165,8 @@ class CrazyflieControl:
 
     def _position_control_cb(self, goal):
         try:
-            obj = pickle.loads(goal.pickle)
-            if isinstance(obj, Back):
-                self._mc.back(obj.distance_m, velocity=obj.velocity)
-            elif isinstance(obj, CircleLeft):
-                self._mc.circle_left(obj.radius_m,
-                    velocity = obj.velocity,
-                    angle_degrees = obj.angle_degrees
-                )
-            elif isinstance(obj, CircleRight):
-                self._mc.circle_right(obj.radius_m,
-                    velocity = obj.velocity,
-                    angle_degrees = obj.angle_degrees
-                )
-            elif isinstance(obj, Down):
-                self._mc.down(obj.distance_m, velocity=obj.velocity)
-            elif isinstance(obj, Forward):
-                self._mc.forward(obj.distance_m, velocity=obj.velocity)
-            elif isinstance(obj, Land):
-                self._mc.land(velocity=obj.velocity)
-            elif isinstance(obj, Left):
-                self._mc.left(obj.distance_m, velocity=obj.velocity)
-            elif isinstance(obj, MoveDistance):
-                self._mc.move_distance(obj.x, obj.y, obj.z, velocity=obj.velocity)
-            elif isinstance(obj, Right):
-                self._mc.right(obj.distance_m, velocity=obj.velocity)
-            elif isinstance(obj, TakeOff):
-                self._mc.take_off(height=obj.height, velocity = obj.velocity)
-            elif isinstance(obj, TurnLeft):
-                self._mc.turn_left(obj.angle_degrees, rate=obj.rate)
-            elif isinstance(obj, TurnRight):
-                self._mc.turn_right(obj.angle_degrees, rate=obj.rate)
-            elif isinstance(obj, Up):
-                self._mc.up(obj.distance_m, velocity=obj.velocity)
+            request = motion_commands.deserialize(goal)
+            pos_request_handlers[request['command']](request)
         except Exception as e:
             print('Exception in action server %s' % self._name + '/position_control')
             print(str(e))
@@ -201,6 +176,7 @@ class CrazyflieControl:
         self._position_control_as.set_succeeded()
 
     def _takeoff(self, goal):
+        # should this request be deprecated? appears to be handled by _position_control_cb
         try:
             self._mc.take_off(height = goal.height)
             time.sleep(5)
@@ -220,6 +196,7 @@ class CrazyflieControl:
         self._land_as.set_succeeded(LandResult(True))
 
     def _move_distance(self, goal):
+        # should this be deprecated? appears to be handled by _position_control_cb
         try:
             x = goal.x
             y = goal.y
@@ -238,4 +215,3 @@ class CrazyflieControl:
             self._move_distance_as.set_aborted()
             print(e)
             return
-        self._move_distance_as.set_succeeded()

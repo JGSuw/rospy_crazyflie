@@ -27,67 +27,98 @@ of the authors and should not be interpreted as representing official policies,
 either expressed or implied, of the <project name> project.
 """
 
+from .motion_primitive import MotionPrimitive
+
 VELOCITY = 0.2
 RATE = 360. / 5.
 
-class StartBack:
+class StartBack(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='StartBack'
+        self.dict['velocity']=velocity
 
-class SetVelSetpoint:
+class SetVelSetpoint(MotionPrimitive):
     def __init__(self, vx, vy, vz, rate_yaw):
-        self.vx = vx
-        self.vy = vy
-        self.vz = vz
-        self.rate_yaw = rate_yaw
+        super().__init__(self)
+        self.dict['command']='SetVelSetpoint'
+        self.dict['vx']=vx
+        self.dict['vy']=vy
+        self.dict['vz']=vz
+        self.dict['rate_yaw']=rate_yaw
 
-class StartBack:
+class StartBack(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        self.velocity = velocity
-class StartCircleLeft:
+        super().__init__(self)
+        self.dict['command']='StartBack'
+        self.dict['velocity']=velocity
+
+class StartCircleLeft(MotionPrimitive):
     def __init__(self, radius_m, velocity = VELOCITY):
-        self.radius_m = radius_m
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='StartCircleLeft'
+        self.dict['radius_m']=radius_m
+        self.dict['velocity']=velocity
 
-class StartCircleRight:
+class StartCircleRight(MotionPrimitive):
     def __init__(self, radius_m, velocity = VELOCITY):
-        self.radius_m = radius_m
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='StartCircleRight'
+        self.dict['radius_m']=radius_m
+        self.dict['velocity']=velocity
 
-class StartDown:
+class StartDown(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='StartDown'
+        self.dict['velocity']=velocity
 
-class StartForward:
+class StartForward(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='StartForward'
+        self.dict['velocity']=velocity
 
-class StartLeft:
+class StartLeft(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='StartLeft'
+        self.dict['velocity']=velocity
 
-class StartLinearMotion:
+class StartLinearMotion(MotionPrimitive):
     def __init__(self, vx, vy, vz):
-        self.vx = vx
-        self.vy = vy
-        self.vz = vz
+        super().__init__(self)
+        self.dict['command']='StartLinearMotion'
+        self.dict['vx']=vx
+        self.dict['vy']=vy
+        self.dict['vz']=vz
 
-class StartRight:
+class StartRight(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='StartRight'
+        self.dict['velocity']=velocity
 
-class StartTurnLeft:
+class StartTurnLeft(MotionPrimitive):
     def __init__(self, rate = RATE):
-        self.rate = rate
+        super().__init__(self)
+        self.dict['command']='StartTurnLeft'
+        self.dict['rate']=rate
 
-class StartTurnRight:
+class StartTurnRight(MotionPrimitive):
     def __init__(self, rate = RATE):
-        self.rate = rate
+        super().__init__(self)
+        self.dict['command']='StartTurnRight'
+        self.dict['rate']=rate
 
-class StartUp:
+class StartUp(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        self.velocity = velocity
+        super().__init__(self)
+        self.dict['command']='StartUp'
+        self.dict['velocity']=velocity
 
-class Stop:
+class Stop(MotionPrimitive):
     def __init__(self):
+        super().__init__(self)
+        self.dict['command']='Stop'
         pass

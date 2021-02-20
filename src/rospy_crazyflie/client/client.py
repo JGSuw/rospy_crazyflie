@@ -34,7 +34,7 @@ import time
 
 from rospy_crazyflie.msg import *
 from rospy_crazyflie.srv import *
-from rospy_crazyflie.motion_commands import *
+from ..motion_commands import *
 
 def get_crazyflies(server='/crazyflie_server'):
         proxy = rospy.ServiceProxy(
@@ -52,7 +52,7 @@ def log_decode(log_data):
     timestamp = log_data.timestamp
     return (data, timestamp)
 
-class CrazyflieClient:
+class Client:
 
     def __init__(self, name):
         self._name = name
@@ -166,7 +166,7 @@ class CrazyflieClient:
         :return:
         """
         action = TakeOff(height=height, velocity=velocity)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
     def land(self, velocity=VELOCITY):
@@ -180,7 +180,7 @@ class CrazyflieClient:
         :return:
         """
         action = Land(velocity=velocity)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
     def left(self, distance_m, velocity=VELOCITY):
@@ -192,7 +192,7 @@ class CrazyflieClient:
         :return:
         """
         action = Left(distance_m, velocity=velocity)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
     def right(self, distance_m, velocity=VELOCITY):
@@ -204,7 +204,7 @@ class CrazyflieClient:
         :return:
         """
         action = Right(distance_m, velocity=velocity)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
     def forward(self, distance_m, velocity=VELOCITY):
@@ -216,7 +216,7 @@ class CrazyflieClient:
         :return:
         """
         action = Forward(distance_m, velocity=velocity)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
     def back(self, distance_m, velocity=VELOCITY):
@@ -228,7 +228,7 @@ class CrazyflieClient:
         :return:
         """
         action = Back(distance_m, velocity=velocity)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
     def up(self, distance_m, velocity=VELOCITY):
@@ -240,7 +240,7 @@ class CrazyflieClient:
         :return:
         """
         action = Up(distance_m, velocity=velocity)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
     def down(self, distance_m, velocity=VELOCITY):
@@ -252,7 +252,7 @@ class CrazyflieClient:
         :return:
         """
         action = Down(distance_m, velocity=velocity)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
     def turn_left(self, angle_degrees, rate=RATE):
@@ -264,7 +264,7 @@ class CrazyflieClient:
         :return:
         """
         action = TurnLeft(angle_degrees, rate=rate)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
 
@@ -277,7 +277,7 @@ class CrazyflieClient:
         :return:
         """
         action = TurnRight(angle_degrees, rate=rate)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
     def circle_left(self, radius_m, velocity=VELOCITY, angle_degrees=360.0):
@@ -290,7 +290,7 @@ class CrazyflieClient:
         :return:
         """
         action = CircleLeft(radius_m, velocity=velocity, angle_degrees=angle_degrees)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
     def circle_right(self, radius_m, velocity=VELOCITY, angle_degrees=360.0):
@@ -303,7 +303,7 @@ class CrazyflieClient:
         :return:
         """
         action = CircleRight(radius_m, velocity=velocity, angle_degrees=angle_degrees)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
     def move_distance(self, distance_x_m, distance_y_m, distance_z_m,
@@ -321,7 +321,7 @@ class CrazyflieClient:
         :return:
         """
         action = MoveDistance(distance_x_m, distance_y_m, distance_y_m, velocity=velocity)
-        goal = PositionControlGoal(pickle.dumps(action))
+        goal = PositionControlGoal(action.serialize())
         self._add_mc_goal(goal)
 
     """
@@ -336,8 +336,7 @@ class CrazyflieClient:
         :return:
         """
         action = StartLeft(velocity=velocity)
-        print(pickle.dumps(action))
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
     def start_right(self, velocity=VELOCITY):
         """
@@ -347,7 +346,7 @@ class CrazyflieClient:
         :return:
         """
         action = StartRight(velocity=velocity)
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
     def start_forward(self, velocity=VELOCITY):
         """
@@ -357,7 +356,7 @@ class CrazyflieClient:
         :return:
         """
         action = StartForward(velocity=velocity)
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
     def start_back(self, velocity=VELOCITY):
         """
@@ -367,7 +366,7 @@ class CrazyflieClient:
         :return:
         """
         action = StartBack(velocity=velocity)
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
     def start_up(self, velocity=VELOCITY):
         """
@@ -377,7 +376,7 @@ class CrazyflieClient:
         :return:
         """
         action = StartUp(velocity=velocity)
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
     def start_down(self, velocity=VELOCITY):
         """
@@ -387,7 +386,7 @@ class CrazyflieClient:
         :return:
         """
         action = StartDown(velocity=velocity)
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
     def stop(self):
         """
@@ -399,7 +398,7 @@ class CrazyflieClient:
         self._mc_goals = []
         self._position_control_client.cancel_all_goals()
         action = Stop()
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
     def start_turn_left(self, rate=RATE):
         """
@@ -409,7 +408,7 @@ class CrazyflieClient:
         :return:
         """
         action = StartTurnLeft(rate=rate)
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
     def start_turn_right(self, rate=RATE):
         """
@@ -419,7 +418,7 @@ class CrazyflieClient:
         :return:
         """
         action = StartTurnRight(rate=rate)
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
     def start_circle_left(self, radius_m, velocity=VELOCITY):
         """
@@ -430,9 +429,9 @@ class CrazyflieClient:
         :return:
         """
         action = StartCircleLeft(radius_m, velocity=velocity)
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
-        self._set_vel_setpoint(velocity, 0.0, 0.0, -rate)
+        # self._set_vel_setpoint(velocity, 0.0, 0.0, -rate) WHY WAS THIS HERE?
 
     def start_circle_right(self, radius_m, velocity=VELOCITY):
         """
@@ -443,7 +442,7 @@ class CrazyflieClient:
         :return:
         """
         action = StartCircleRight(radius_m, velocity=velocity)
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
     def start_linear_motion(self, velocity_x_m, velocity_y_m, velocity_z_m):
         """
@@ -459,11 +458,11 @@ class CrazyflieClient:
         :return:
         """
         action = StartLinearMotion(velocity_x_m, velocity_y_m, velocity_z_m)
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
     def _set_vel_setpoint(self, velocity_x, velocity_y, velocity_z, rate_yaw):
         action = SetVelSetpoint(velocity_x, velocity_y, velocity_z, rate_yaw)
-        self._velocity_control_client(pickle.dumps(action))
+        self._velocity_control_client(action.serialize())
 
     def set_param(self, param, value):
         """

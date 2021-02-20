@@ -45,7 +45,7 @@ if __name__ == "__main__":
     # Causes the crazyflie to takeoff to height of .5 meters
     client.take_off(.25)
 
-    raw_input("enter anything to exit")
+    input("enter anything to exit")
 
     # Causes the crazyflie to land
     client.land()

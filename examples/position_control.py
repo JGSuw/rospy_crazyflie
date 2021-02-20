@@ -39,15 +39,15 @@ controller is ideal. Errors will build over time.
 
 import rospy
 import time
-import rospy_crazyflie.crazyflie_client as crazyflie_client
-from rospy_crazyflie.crazyflie_client import CrazyflieClient
+from rospy_crazyflie.client import get_crazyflies 
+from rospy_crazyflie.client import Client as CrazyflieClient 
 import sys
 
 if __name__ == "__main__":
     rospy.init_node("position_control_example")
 
     # Get all crazyflies on the /crazyflie_server
-    crazyflies = crazyflie_client.get_crazyflies(server='/crazyflie_server')
+    crazyflies = get_crazyflies(server='/crazyflie_server')
     # Connect to first crazyflie
     client = CrazyflieClient(crazyflies[0])
 

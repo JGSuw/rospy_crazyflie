@@ -45,35 +45,35 @@ from rospy_crazyflie.srv import *
 import rospy_crazyflie.motion_commands as motion_commands
 
 vel_request_handlers = {
-    'SetVelSetpoint':       lambda obj: self._mc._set_vel_setpoint(obj['vx'], obj.['vy'], obj['vz'], obj['rate_yaw']),
-    'StartBack':            lambda obj: self._mc.start_back(velocity = obj['velocity']),
-    'StartCircleLeft':      lambda obj: self._mc.start_circle_left(obj['radius_m'], velocity=obj['velocity']),
-    'StartCircleRight':     lambda obj: self._mc.start_turn_right(obj['radius_m'], velocity=obj['velocity']),
-    'StartDown':            lambda obj: self._mc.start_down(velocity=obj['velocity']),
-    'StartForward':         lambda obj: self._mc.start_forward(velocity=obj['velocity']),
-    'StartLeft':            lambda obj: self._mc.start_left(velocity=obj['velocity']),
-    'StartLinearMotion':    lambda obj: self._mc.start_linear_motion(obj['vx'], obj['vy'], obj['vz']),
-    'StartRight':           lambda obj: self._mc.start_right(velocity=obj['velocity']),
-    'StartTurnLeft':        lambda obj: self._mc.start_turn_left(rate=obj['rate']),
-    'StartTurnRight':       lambda obj: self._mc.start_turn_right(rate=obj['rate']),
-    'StartUp':              lambda obj: self._mc.start_up(velocity=obj['velocity']),
-    'Stop':                 lambda obj: self._mc.stop(),
+    'SetVelSetpoint':       lambda obj, mc: mc._set_vel_setpoint(obj['vx'], obj['vy'], obj['vz'], obj['rate_yaw']),
+    'StartBack':            lambda obj, mc: mc.start_back(velocity = obj['velocity']),
+    'StartCircleLeft':      lambda obj, mc: mc.start_circle_left(obj['radius_m'], velocity=obj['velocity']),
+    'StartCircleRight':     lambda obj, mc: _mc.start_turn_right(obj['radius_m'], velocity=obj['velocity']),
+    'StartDown':            lambda obj, mc: mc.start_down(velocity=obj['velocity']),
+    'StartForward':         lambda obj, mc: mc.start_forward(velocity=obj['velocity']),
+    'StartLeft':            lambda obj, mc: mc.start_left(velocity=obj['velocity']),
+    'StartLinearMotion':    lambda obj, mc: mc_mc.start_linear_motion(obj['vx'], obj['vy'], obj['vz']),
+    'StartRight':           lambda obj, mc: mc.start_right(velocity=obj['velocity']),
+    'StartTurnLeft':        lambda obj, mc: mc.start_turn_left(rate=obj['rate']),
+    'StartTurnRight':       lambda obj, mc:_mc.start_turn_right(rate=obj['rate']),
+    'StartUp':              lambda obj, mc: mc.start_up(velocity=obj['velocity']),
+    'Stop':                 lambda obj, mc: mc.stop(),
 }
 
 pos_request_handlers = {
-    'Back': lambda obj: self._mc.back(obj['distance_m'], velocity=obj['velocity']),
-    'CircleLeft': lambda obj: self._mc.circle_left(obj['radius_m'], velocity=obj['velocity'], angle_degrees=obj['angle_degrees']),
-    'CircleRight': lambda obj: self._mc.circle_right(obj['radius_m'], velocity=obj['velocity'], angle_degrees=obj['angle_degrees']),
-    'Down': lambda obj: self._mc.down(obj['distance_m', velocity=obj['velocity']),
-    'Forward': lambda obj: self._mc.forward(obj['distance_m'], velocity=obj'[velocity']),
-    'Land': lambda obj: self._mc.land(velocity=obj['velocity']),
-    'Left': lambda obj: self._mc.left(obj['distance_m', velocity=obj['velocity']),
-    'MoveDistance': lambda obj: self._mc.move_distance(obj['x'], obj['y'], obj['z'], velocity=obj['velocity']),
-    'Right': lambda obj: self._mc.right(obj['distance_m'], velocity=obj['velocity']),
-    'TakeOff': lambda obj: self._mc.take_off(height=obj['height'], velocity=obj['velocity']),
-    'TurnLeft': lambda obj: self._mc.turn_left(obj['angle_degrees'], rate=obj['rate']),
-    'TurnRight': lambda obj: self._mc.turn_right(obj['angle_degrees'], rate=obj['rate']),
-    'Up': lambda obj: self._mc.up(obj['distance_m', velocity=obj['velocity'])
+    'Back':                 lambda obj, mc: mc.back(obj['distance_m'], velocity=obj['velocity']),
+    'CircleLeft':           lambda obj, mc: mc.circle_left(obj['radius_m'], velocity=obj['velocity'], angle_degrees=obj['angle_degrees']),
+    'CircleRight':          lambda obj, mc: mc.circle_right(obj['radius_m'], velocity=obj['velocity'], angle_degrees=obj['angle_degrees']),
+    'Down':                 lambda obj, mc: mc.down(obj['distance_m'], velocity=obj['velocity']),
+    'Forward':              lambda obj, mc: mc.forward(obj['distance_m'], velocity=obj['velocity']),
+    'Land':                 lambda obj, mc: mc.land(velocity=obj['velocity']),
+    'Left':                 lambda obj, mc: mc.left(obj['distance_m'], velocity=obj['velocity']),
+    'MoveDistance':         lambda obj, mc: mc.move_distance(obj['x'], obj['y'], obj['z'], velocity=obj['velocity']),
+    'Right':                lambda obj, mc: mc.right(obj['distance_m'], velocity=obj['velocity']),
+    'TakeOff':              lambda obj, mc: mc.take_off(height=obj['height'], velocity=obj['velocity']),
+    'TurnLeft':             lambda obj, mc: mc.turn_left(obj['angle_degrees'], rate=obj['rate']),
+    'TurnRight':            lambda obj, mc: mc.turn_right(obj['angle_degrees'], rate=obj['rate']),
+    'Up':                   lambda obj, mc: mc.up(obj['distance_m'], velocity=obj['velocity'])
 }
 
 class Control:
@@ -150,7 +150,7 @@ class Control:
 
     def _velocity_control_cb(self, req):
         try:
-            request = motion_commands.deserialize(req)
+            request = motion_commands.deserialize(req.request, self._mc)
             print(self._mc)
             vel_request_handlers[request['command']](reqeust)
         except Exception as e:
@@ -165,8 +165,9 @@ class Control:
 
     def _position_control_cb(self, goal):
         try:
-            request = motion_commands.deserialize(goal)
-            pos_request_handlers[request['command']](request)
+            request = motion_commands.deserialize(goal.request)
+            print(goal.request)
+            pos_request_handlers[request['command']](request, self._mc)
         except Exception as e:
             print('Exception in action server %s' % self._name + '/position_control')
             print(str(e))

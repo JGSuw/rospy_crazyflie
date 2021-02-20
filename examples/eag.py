@@ -42,7 +42,7 @@ contain an 'eag.eag' log variable.
 import rospy
 import time
 import sys
-from rospy_crazyflie.crazyflie_client import CrazyflieClient
+from rospy_crazyflie.client import Client as CrazyflieClient 
 from rospy_crazyflie.srv import *
 from rospy_crazyflie.msg import *
 

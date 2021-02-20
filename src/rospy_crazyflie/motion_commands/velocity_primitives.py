@@ -34,13 +34,13 @@ RATE = 360. / 5.
 
 class StartBack(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='StartBack'
         self.dict['velocity']=velocity
 
 class SetVelSetpoint(MotionPrimitive):
     def __init__(self, vx, vy, vz, rate_yaw):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='SetVelSetpoint'
         self.dict['vx']=vx
         self.dict['vy']=vy
@@ -49,45 +49,45 @@ class SetVelSetpoint(MotionPrimitive):
 
 class StartBack(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='StartBack'
         self.dict['velocity']=velocity
 
 class StartCircleLeft(MotionPrimitive):
     def __init__(self, radius_m, velocity = VELOCITY):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='StartCircleLeft'
         self.dict['radius_m']=radius_m
         self.dict['velocity']=velocity
 
 class StartCircleRight(MotionPrimitive):
     def __init__(self, radius_m, velocity = VELOCITY):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='StartCircleRight'
         self.dict['radius_m']=radius_m
         self.dict['velocity']=velocity
 
 class StartDown(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='StartDown'
         self.dict['velocity']=velocity
 
 class StartForward(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='StartForward'
         self.dict['velocity']=velocity
 
 class StartLeft(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='StartLeft'
         self.dict['velocity']=velocity
 
 class StartLinearMotion(MotionPrimitive):
     def __init__(self, vx, vy, vz):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='StartLinearMotion'
         self.dict['vx']=vx
         self.dict['vy']=vy
@@ -95,30 +95,30 @@ class StartLinearMotion(MotionPrimitive):
 
 class StartRight(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='StartRight'
         self.dict['velocity']=velocity
 
 class StartTurnLeft(MotionPrimitive):
     def __init__(self, rate = RATE):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='StartTurnLeft'
         self.dict['rate']=rate
 
 class StartTurnRight(MotionPrimitive):
     def __init__(self, rate = RATE):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='StartTurnRight'
         self.dict['rate']=rate
 
 class StartUp(MotionPrimitive):
     def __init__(self, velocity = VELOCITY):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='StartUp'
         self.dict['velocity']=velocity
 
 class Stop(MotionPrimitive):
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
         self.dict['command']='Stop'
         pass

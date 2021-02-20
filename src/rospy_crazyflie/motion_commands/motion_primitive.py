@@ -31,7 +31,7 @@ class MotionPrimitive:
     def __init__(self):
         self.dict = {}
     def serialize(self):
-        yaml.dump(self.dict)
+        return yaml.dump(self.dict)
 
 def deserialize(string):
-    return yaml.load(string)
+    return yaml.load(string, Loader=yaml.SafeLoader)

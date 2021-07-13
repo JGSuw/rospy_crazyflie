@@ -56,7 +56,6 @@ class CrazyflieLog:
         )
         self._addLogConfig_as.start()
         self._logs = {}
-
         # Set up log configs for standard log groups
         self._controller_rpy_rate_pub = rospy.Publisher(
             self._name + '/ControllerRPYRate',

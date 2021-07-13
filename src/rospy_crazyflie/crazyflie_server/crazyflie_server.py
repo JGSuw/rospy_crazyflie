@@ -44,7 +44,7 @@ class CrazyflieServer:
 
     def __init__(self):
         # Ros stuff
-        rospy.init_node("crazyflie_server")
+        rospy.init_node("crazyflie_server", log_level=rospy.DEBUG)
 
         # Dictionaries to hold the crazyflies and related objects
         # self._address = rospy.get_param('~address')
@@ -61,7 +61,6 @@ class CrazyflieServer:
             GetCrazyflies,
             self._get_crazyflies_cb
         )
-
         for name in self._uris.keys():
             uri = self._uris[name]
             parts = uri.split('/')
